@@ -110,7 +110,7 @@ public class ClientConsole implements ChatIF
     try
     {
       host = args[0];
-      // E5 b)
+      // E5 b) 
       // add port number from command line
       // which is the 2nd argument 
       port = Integer.parseInt(args[1]); 
