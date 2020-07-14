@@ -87,7 +87,7 @@ public class ChatClient extends AbstractClient
     }
   }
   
-
+  // E5 a)
   // methods from Abstract Client 
   public void connectionClosed() {
     clientUI.display("The connection of the server is closed!");
