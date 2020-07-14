@@ -78,6 +78,18 @@ public class ChatClient extends AbstractClient
     }
   }
   
+
+  // methods from Abstract Client 
+  public void connectionClosed() {
+    clientUI.display("The connection of the server is closed!");
+  }
+
+  public void connectionException(Exception exception) {
+    clientUI.display("Connection exception, did not terminate properly.");
+  }
+
+
+
   /**
    * This method terminates the client.
    */
