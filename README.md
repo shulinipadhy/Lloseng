@@ -13,4 +13,4 @@ Some relevant websites related to this repository:
 
 * Student solutions to exercises (first edition): http://highered.mheducation.com/sites/0077097610/student_view0/student_solutions.html
 
-Professors may obtain solutions to exercises including code by contacting the authors. They must show a web presence confirming their email address and that they are indeed an academic at that same domain.
+Professors may obtain any of the solutions to exercises including code by contacting the authors. They must show a web presence confirming their email address and that they are indeed an academic at that same domain.
