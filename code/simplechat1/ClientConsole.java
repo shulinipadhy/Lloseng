@@ -41,6 +41,8 @@ public class ClientConsole implements ChatIF
    * @param host The host to connect to.
    * @param port The port to connect on.
    */
+  
+  // E7 a)
   // add loginId into constructor 
   public ClientConsole(String loginId, String host, int port) 
   {
