@@ -80,6 +80,7 @@ public class EchoServer extends AbstractServer
         }
       }
     }
+    
     else {
       String idString = client.getInfo("Id").toString();
       System.out.println("Message received: " + msg + " from " + client + " " + idString);
