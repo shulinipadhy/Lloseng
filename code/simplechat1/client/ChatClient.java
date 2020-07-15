@@ -90,13 +90,15 @@ public class ChatClient extends AbstractClient
     }
 
     // E6 a)
-    // Add #quit, #login, #logoff, #sethost<host>,
-    // #setport<port>, #gethost, #getport
+    // Add #quit, #login, #logoff, #sethost<host>, #setport<port>
+    // #gethost, #getport
 
-    // use switch-case statements to recognize command #
-      if(message[0] == "#") {
-        // split the message to choose every word
-        String[] messageSplit = message.split(" ");
+    
+    // split the message to choose every word
+    String[] messageSplit = message.split(" ");
+    // each command should start with symbol #
+    // so we check if it's a # command or not 
+      if(messageSplit[0].equals("#")) {
         // use switch-case statement
         switch(messageSplit[0]) {
           
@@ -136,7 +138,7 @@ public class ChatClient extends AbstractClient
             // check if client is connected 
             if(isConnected() == false) {
               // if not, then use the port argument as setport
-              this.setPort(messageSplit[1]);
+              this.setPort(Integer.parseInt(messageSplit[1]));
             }
             else {
               // unable to set port while connected
@@ -154,6 +156,10 @@ public class ChatClient extends AbstractClient
           case"#getport":
             // use getPort() method from AbstractClient class
             System.out.println("Port: " + this.getPort());
+            break;
+
+          default:
+            System.out.println("The command is invalid");
             break;
         }
       }

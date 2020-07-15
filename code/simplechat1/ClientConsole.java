@@ -41,11 +41,12 @@ public class ClientConsole implements ChatIF
    * @param host The host to connect to.
    * @param port The port to connect on.
    */
-  public ClientConsole(String host, int port) 
+  // add loginId into constructor 
+  public ClientConsole(String loginId, String host, int port) 
   {
     try 
     {
-      client= new ChatClient(host, port, this);
+      client= new ChatClient(loginId, host, port, this);
     } 
     catch(IOException exception) 
     {
@@ -121,7 +122,7 @@ public class ClientConsole implements ChatIF
       // add port number 
       port = DEFAULT_PORT;
     }
-    ClientConsole chat= new ClientConsole(host, DEFAULT_PORT);
+    ClientConsole chat= new ClientConsole(loginId, host, DEFAULT_PORT);
     chat.accept();  //Wait for console data
   }
 }
