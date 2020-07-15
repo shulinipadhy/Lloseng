@@ -24,9 +24,6 @@ public class EchoServer extends AbstractServer
    * The default port to listen on.
    */
   final public static int DEFAULT_PORT = 5555;
-
-  // to display chat in server 
-  ChatIF serverUI;
   
   //Constructors ****************************************************
   
@@ -35,12 +32,9 @@ public class EchoServer extends AbstractServer
    *
    * @param port The port number to connect on.
    */
-  public EchoServer(int port, ChatIF serverUI) 
+  public EchoServer(int port) 
   {
     super(port);
-    this.serverUI = serverUI;
-    // make sure that the server is listening 
-    listen();
   }
 
   
