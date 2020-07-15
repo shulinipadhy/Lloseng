@@ -26,6 +26,7 @@ public class ChatClient extends AbstractClient
    * the display method in the client.
    */
   ChatIF clientUI; 
+  
   // E7 a)
   // add login Id 
   String loginId;
@@ -50,6 +51,12 @@ public class ChatClient extends AbstractClient
     openConnection();
     // login for client to connect to server
     handleMessageFromClientUI("#login: " + loginId);
+
+    // mandatory loginId, otherwise clinet should quit if not provided
+    if(loginId == null) {
+      clientUI.display("LoginId mandatory! Client is quitting.");
+      quit();
+    }
   }
 
   
@@ -95,12 +102,14 @@ public class ChatClient extends AbstractClient
 
     
     // split the message to choose every word
-    String[] messageSplit = message.split(" ");
+    String[] messageStringSplit = message.split(" ");
+    // split the message to choose every character
+    char[] messageCharSplit = message.toCharArray();
     // each command should start with symbol #
     // so we check if it's a # command or not 
-      if(messageSplit[0].equals("#")) {
+      if(messageCharSplit[0] == ('#')) {
         // use switch-case statement
-        switch(messageSplit[0]) {
+        switch(messageStringSplit[0]) {
           
           // #quit case
           case "#quit":
@@ -125,7 +134,7 @@ public class ChatClient extends AbstractClient
             // check if client is connected 
             if(isConnected() == false) {
               // if not, then use the host argument as sethost
-              this.setHost(messageSplit[1]);
+              this.setHost(messageStringSplit[1]);
             }
             else {
               // unable to set port while connected
@@ -138,7 +147,7 @@ public class ChatClient extends AbstractClient
             // check if client is connected 
             if(isConnected() == false) {
               // if not, then use the port argument as setport
-              this.setPort(Integer.parseInt(messageSplit[1]));
+              this.setPort(Integer.parseInt(messageStringSplit[1]));
             }
             else {
               // unable to set port while connected
@@ -159,7 +168,7 @@ public class ChatClient extends AbstractClient
             break;
 
           default:
-            System.out.println("The command is invalid");
+            System.out.println("ERROR - No login ID specified. Connection aborted.");
             break;
         }
       }
@@ -173,7 +182,7 @@ public class ChatClient extends AbstractClient
   }
 
   public void connectionException(Exception exception) {
-    clientUI.display("Connection exception, did not terminate properly.");
+    clientUI.display("Connection interrupted, did not terminate properly.");
     quit();
   }
 

@@ -42,7 +42,7 @@ public class ServerConsole implements ChatIF {
 
       		while (true) {
       			message = fromConsole.readLine();
-       			this.display(message);
+       			server.handleMessageFromServerUI(message);
        		}
     	} 
     		
