@@ -45,13 +45,115 @@ public class EchoServer extends AbstractServer
    * @param msg The message received from the client.
    * @param client The connection from which the message originated.
    */
-  public void handleMessageFromClient
-    (Object msg, ConnectionToClient client)
+  public void handleMessageFromClient(Object msg, ConnectionToClient client)
   {
     System.out.println("Message received: " + msg + " from " + client);
     this.sendToAllClients(msg);
   }
     
+  // E6 c)
+  // Add a new method to use # commands with special functions
+  // Add #quit, #stop, #close, #setport<port>, #gethost, #getport
+
+  public void handleMessageFromServerUI(String message) {
+    try {
+      this.listen();
+      System.out.println(message);
+    }
+    
+    catch(IOException e) {
+      System.out.println("Could not send message to server.  Terminating server.");
+      System.exit(1);
+    }
+    
+    // Add #quit, #stop, #close, #setport<port>, #start, #getport
+
+    // split the message to choose every word
+    String[] messageSplit = message.split(" ");
+    // each command should start with symbol #
+    // so we check if it's a # command or not 
+      if(messageSplit[0].equals("#")) {
+        // use switch-case statement
+        switch(messageSplit[0]) {
+          
+          // #quit case
+          // use close from AbstractServer class
+          case "#quit":
+            try {
+              this.close();
+            }
+            catch(Exception ex) {
+              System.out.println("Quitting");
+              break;
+            }
+            break;
+          
+          // #stop case
+          case "#stop":
+            // use stopListening() method from AbstractServer
+            this.stopListening();
+            break;
+          
+          // #close case
+          case "#close":
+            // use close() method from AbstractServer
+            try {
+              this.close();
+            }
+            catch(Exception ex) {
+              System.out.println("Closing");
+              break;
+            }
+            break;
+
+          // #setport <port> case
+          case "#setport":
+            // check if server is connected 
+            // use isListening from AbstractServer
+            if(this.isListening() == false) {
+              // if not, then use the port argument as setport
+              this.setPort(Integer.parseInt(messageSplit[1]));
+            }
+            else {
+              // unable to set port while connected
+              System.out.println("Unable to set port while connected!");
+            }
+            break;
+
+          // #start case
+          case "#start":
+            // check if server is connected
+            // if not, use listen() method from AbstractServer
+            if(this.isListening() == false) {
+              try {
+                this.listen();
+              }
+              catch(Exception ex) {
+                System.out.println("Exception error while quitting");
+                break;
+              }
+            break;
+            }
+
+            else {
+              System.out.println("The server has already started");
+            }
+            break;
+
+          // #getport case
+          case"#getport":
+            // use getPort() method from AbstractServer 
+            System.out.println("Port: " + this.getPort());
+            break;
+
+          default:
+            System.out.println("The command is invalid");
+            break;
+        }
+      }
+  }
+
+
   /**
    * This method overrides the one in the superclass.  Called
    * when the server starts listening for connections.
