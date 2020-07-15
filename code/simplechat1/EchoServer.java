@@ -45,10 +45,47 @@ public class EchoServer extends AbstractServer
    * @param msg The message received from the client.
    * @param client The connection from which the message originated.
    */
+  
+  // E7 c) 
+  // #login command should be recognized by the server 
   public void handleMessageFromClient(Object msg, ConnectionToClient client)
   {
-    System.out.println("Message received: " + msg + " from " + client);
-    this.sendToAllClients(msg);
+    // check if the client is using #login command 
+    String msgStr = msg.toString();
+    // split message to choose every character
+    char[] messageCharSplit = msgStr.toCharArray();
+    // check if it starts with #
+    if(messageCharSplit[0] == '#') {
+      // split message to choose every word
+      String[] messageStringSplit = msgStr.split(" ");
+      if(messageStringSplit[0] == "#login") {
+        // use getInfo method to retrieve id again later
+        if(client.getInfo("Id") == null) {
+          System.out.println(msg + "is logged in.");
+          // use method setInfo; takes 2 arguments 
+          // the new set Id, and the message
+          client.setInfo(("Id"), messageStringSplit[1]);
+        }
+
+        else {
+          try {
+            System.out.println("SERVER MSG> Error: ID could not be reset");
+            this.close();
+          }
+          
+          catch(IOException e) {
+            System.out.println("Error occured while logging in! Terminating server.");
+            System.exit(1);
+          }
+        }
+      }
+    }
+    else {
+      String idString = client.getInfo("Id").toString();
+      System.out.println("Message received: " + msg + " from " + client + " " + idString);
+      // send out loginId info back to client
+      System.out.println(idString + ": " + msg);
+    }
   }
     
   // E6 c)
@@ -68,13 +105,15 @@ public class EchoServer extends AbstractServer
     
     // Add #quit, #stop, #close, #setport<port>, #start, #getport
 
+    // split the message to choose every character
+    char[] messageCharSplit = message.toCharArray();
     // split the message to choose every word
-    String[] messageSplit = message.split(" ");
+    String[] messageStringSplit = message.split(" ");
     // each command should start with symbol #
     // so we check if it's a # command or not 
-      if(messageSplit[0].equals("#")) {
+      if(messageCharSplit[0] == ('#')) {
         // use switch-case statement
-        switch(messageSplit[0]) {
+        switch(messageStringSplit[0]) {
           
           // #quit case
           // use close from AbstractServer class
@@ -84,6 +123,7 @@ public class EchoServer extends AbstractServer
             }
             catch(Exception ex) {
               System.out.println("Quitting");
+              System.exit(0);
               break;
             }
             break;
@@ -102,6 +142,7 @@ public class EchoServer extends AbstractServer
             }
             catch(Exception ex) {
               System.out.println("Closing");
+              System.exit(0);
               break;
             }
             break;
@@ -112,7 +153,7 @@ public class EchoServer extends AbstractServer
             // use isListening from AbstractServer
             if(this.isListening() == false) {
               // if not, then use the port argument as setport
-              this.setPort(Integer.parseInt(messageSplit[1]));
+              this.setPort(Integer.parseInt(messageStringSplit[1]));
             }
             else {
               // unable to set port while connected
@@ -129,7 +170,7 @@ public class EchoServer extends AbstractServer
                 this.listen();
               }
               catch(Exception ex) {
-                System.out.println("Exception error while quitting");
+                System.out.println("Error occured while starting");
                 break;
               }
             break;
