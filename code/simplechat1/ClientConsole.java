@@ -32,7 +32,6 @@ public class ClientConsole implements ChatIF
    */
   ChatClient client;
 
-  
   //Constructors ****************************************************
 
   /**
@@ -107,22 +106,29 @@ public class ClientConsole implements ChatIF
    */
   public static void main(String[] args) 
   {
+    String loginId = "";
     String host = "";
     int port = 0;  //The port number
 
     try
     {
-      host = args[0];
+      loginId = args[0];
+      host = args[1];
       // E5 b) 
       // add port number from command line
       // which is the 2nd argument 
-      port = Integer.parseInt(args[1]); 
+      port = Integer.parseInt(args[2]); 
     }
     catch(ArrayIndexOutOfBoundsException e)
     {
       host = "localhost";
       // add port number 
       port = DEFAULT_PORT;
+    }
+
+    catch(NumberFormatException e) {
+      System.out.println("Error: NumberFormatException! Terminating client.");
+      System.exit(1);
     }
     ClientConsole chat= new ClientConsole(loginId, host, DEFAULT_PORT);
     chat.accept();  //Wait for console data
