@@ -4,6 +4,7 @@
 
 import java.io.*;
 import ocsf.server.*;
+import common.*;
 
 /**
  * This class overrides some of the methods in the abstract 
@@ -23,6 +24,9 @@ public class EchoServer extends AbstractServer
    * The default port to listen on.
    */
   final public static int DEFAULT_PORT = 5555;
+
+  // to display chat in server 
+  ChatIF serverUI;
   
   //Constructors ****************************************************
   
@@ -31,9 +35,12 @@ public class EchoServer extends AbstractServer
    *
    * @param port The port number to connect on.
    */
-  public EchoServer(int port) 
+  public EchoServer(int port, ChatIF serverUI) 
   {
     super(port);
+    this.serverUI = serverUI;
+    // make sure that the server is listening 
+    listen();
   }
 
   
@@ -61,7 +68,6 @@ public class EchoServer extends AbstractServer
       if(messageStringSplit[0] == "#login") {
         // use getInfo method to retrieve id again later
         if(client.getInfo("Id") == null) {
-          System.out.println(msg + "is logged in.");
           // use method setInfo; takes 2 arguments 
           // the new set Id, and the message
           client.setInfo(("Id"), messageStringSplit[1]);
@@ -80,12 +86,13 @@ public class EchoServer extends AbstractServer
         }
       }
     }
-    
+
     else {
       String idString = client.getInfo("Id").toString();
       System.out.println("Message received: " + msg + " from " + client + " " + idString);
       // send out loginId info back to client
-      System.out.println(idString + ": " + msg);
+      // use sendToAllClients method from AbstractServer
+      this.sendToAllClients(idString + ": " + msg);
     }
   }
     
@@ -133,6 +140,8 @@ public class EchoServer extends AbstractServer
           case "#stop":
             // use stopListening() method from AbstractServer
             this.stopListening();
+            // give a notification to user 
+            this.sendToAllClients("Notification: Server has stopped listening for connections!");
             break;
           
           // #close case
@@ -192,6 +201,10 @@ public class EchoServer extends AbstractServer
             System.out.println("The command is invalid");
             break;
         }
+      }
+
+      else {
+        this.sendToAllClients("SERVER MSG> " + message);
       }
   }
 
