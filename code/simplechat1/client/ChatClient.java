@@ -26,8 +26,9 @@ public class ChatClient extends AbstractClient
    * the display method in the client.
    */
   ChatIF clientUI; 
-  // add id 
-  String id;
+  // E7 a)
+  // add login Id 
+  String loginId;
   
   //Constructors ****************************************************
   
@@ -40,7 +41,7 @@ public class ChatClient extends AbstractClient
    */
   
   // add loginId into constructor
-  public ChatClient(String host, String loginId, int port, ChatIF clientUI) 
+  public ChatClient(String loginId, String host, int port, ChatIF clientUI) 
     throws IOException 
   {
     super(host, port); //Call the superclass constructor
@@ -54,7 +55,7 @@ public class ChatClient extends AbstractClient
   
   //Instance methods ************************************************
     
-  // method to get id
+  // method to get login Id
   public String getLoginId() {
     return loginId;
   }
@@ -74,6 +75,8 @@ public class ChatClient extends AbstractClient
    *
    * @param message The message from the UI.    
    */
+  
+
   public void handleMessageFromClientUI(String message)
   {
     try
@@ -85,6 +88,75 @@ public class ChatClient extends AbstractClient
       clientUI.display("Could not send message to server.  Terminating client.");
       quit();
     }
+
+    // E6 a)
+    // Add #quit, #login, #logoff, #sethost<host>,
+    // #setport<port>, #gethost, #getport
+
+    // use switch-case statements to recognize command #
+      if(message[0] == "#") {
+        // split the message to choose every word
+        String[] messageSplit = message.split(" ");
+        // use switch-case statement
+        switch(messageSplit[0]) {
+          
+          // #quit case
+          case "#quit":
+            quit();
+            break;
+          
+          // #logoff case
+          case "#logoff":
+            // just in case there is a connection exception
+            // use closeConnection method
+            try {
+              closeConnection();
+            }
+            // catch the exception
+            catch(IOException exception) {
+              System.out.println("Exception error while logging off!");
+              break;
+            }
+          
+          // #sethost <host> case
+          case "#sethost":
+            // check if client is connected 
+            if(isConnected() == false) {
+              // if not, then use the host argument as sethost
+              this.setHost(messageSplit[1]);
+            }
+            else {
+              // unable to set port while connected
+              System.out.println("Unable to set host while connected!");
+            }
+            break;
+
+          // #setport <port> case
+          case "#setport":
+            // check if client is connected 
+            if(isConnected() == false) {
+              // if not, then use the port argument as setport
+              this.setPort(messageSplit[1]);
+            }
+            else {
+              // unable to set port while connected
+              System.out.println("Unable to set port while connected!");
+            }
+            break;
+
+          // #gethost case
+          case "#gethost":
+            // use getHost() method from AbstractClient class
+            System.out.println("Host: " + this.getHost());
+            break;
+
+          // #getport case
+          case"#getport":
+            // use getPort() method from AbstractClient class
+            System.out.println("Port: " + this.getPort());
+            break;
+        }
+      }
   }
   
   // E5 a)
@@ -96,6 +168,7 @@ public class ChatClient extends AbstractClient
 
   public void connectionException(Exception exception) {
     clientUI.display("Connection exception, did not terminate properly.");
+    quit();
   }
 
 
