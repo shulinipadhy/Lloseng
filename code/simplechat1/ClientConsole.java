@@ -110,18 +110,37 @@ public class ClientConsole implements ChatIF
     String host = "";
     int port = 0;  //The port number
 
+    
+    // Try-catch for loginId  
     try
     {
       loginId = args[0];
+    }
+
+    catch(ArrayIndexOutOfBoundsException e) {
+      System.out.println("Error: Invalid loginId! Terminating client.");
+      System.exit(1);
+    }
+
+    // Try-catch for host 
+    try {
       host = args[1];
+    }
+
+    catch(ArrayIndexOutOfBoundsException e) {
+      host = "localhost";
+    }
+
+    // Try-catch for port 
+    try{
       // E5 b) 
       // add port number from command line
       // which is the 2nd argument 
       port = Integer.parseInt(args[2]); 
     }
+
     catch(ArrayIndexOutOfBoundsException e)
     {
-      host = "localhost";
       // add port number 
       port = DEFAULT_PORT;
     }
@@ -130,7 +149,8 @@ public class ClientConsole implements ChatIF
       System.out.println("Error: NumberFormatException! Terminating client.");
       System.exit(1);
     }
-    ClientConsole chat= new ClientConsole(loginId, host, DEFAULT_PORT);
+
+    ClientConsole chat= new ClientConsole(loginId, host, port);
     chat.accept();  //Wait for console data
   }
 }
