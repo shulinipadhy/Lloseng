@@ -49,47 +49,60 @@ public class EchoServer extends AbstractServer
   
   // E7 c) 
   // #login command should be recognized by the server 
-  public void handleMessageFromClient(Object msg, ConnectionToClient client)
-  {
-    // check if the client is using #login command 
-    String msgStr = msg.toString();
-    // split message to choose every character
-    char[] messageCharSplit = msgStr.toCharArray();
-    // check if it starts with #
-    if(messageCharSplit[0] == '#') {
-      // split message to choose every word
-      String[] messageStringSplit = msgStr.split(" ");
-      if(messageStringSplit[0] == "#login") {
-        // use getInfo method to retrieve id again later
-        if(client.getInfo("Id") == null) {
-          // use method setInfo; takes 2 arguments 
-          // the new set Id, and the message
-          client.setInfo(("Id"), messageStringSplit[1]);
+  public void handleMessageFromClient(Object msg, ConnectionToClient client) {
+      // check if the client is using #login command 
+      String msgStr = msg.toString();
+      // split message to choose every character
+      char[] messageCharSplit = msgStr.toCharArray();
+      // check if it starts with #
+      if(messageCharSplit[0] == '#') {
+        // split message to choose every word
+        String[] messageStringSplit = msgStr.split(" ");
+        if(messageStringSplit[0].equals("#login") && messageStringSplit.length>1) {
+          if(client.getInfo("loginID") == null) {
+                // use method setInfo; takes 2 arguments 
+                // the new set ID, and the message
+                client.setInfo(("loginID"), messageStringSplit[1]);
+                System.out.println(client.getInfo("loginID") + " has logged on.");
+                this.sendToAllClients(client.getInfo("loginID") + " has logged on.");
+              }
+
+            else {
+                try {
+                // sendToClient method from AbstractServer
+                client.sendToClient("SERVER MSG> Error: loginID could not be reset");
+                }
+            
+                catch(IOException e) {
+                System.out.println("Error occured while logging in! Terminating server.");
+                }
+            }   
+        } 
+      }
+
+      else {
+        if(client.getInfo("loginID") == null) {
+              try {
+              // sendToClient method from AbstractServer
+              client.sendToClient("SERVER MSG> Error: loginID could not be reset");
+              client.close();          
+              }
+
+              catch(IOException e) {
+              System.out.println("Error occured while logging in! Terminating server.");
+              }
         }
 
         else {
-          try {
-            System.out.println("SERVER MSG> Error: ID could not be reset");
-            this.close();
-          }
-          
-          catch(IOException e) {
-            System.out.println("Error occured while logging in! Terminating server.");
-            System.exit(1);
-          }
+          String idString = client.getInfo("loginID").toString();
+          System.out.println("Message received: " + msg + " from " + idString);
+          // send out loginID info back to client
+          // use sendToAllClients method from AbstractServer
+          this.sendToAllClients(idString + ": " + msgStr);
         }
       }
-    }
-
-    else {
-      String idString = client.getInfo("Id").toString();
-      System.out.println("Message received: " + msg + " from " + client + " " + idString);
-      // send out loginId info back to client
-      // use sendToAllClients method from AbstractServer
-      this.sendToAllClients(idString + ": " + msg);
-    }
   }
-    
+
   // E6 c)
   // Add a new method to use # commands with special functions
   // Add #quit, #stop, #close, #setport<port>, #gethost, #getport
