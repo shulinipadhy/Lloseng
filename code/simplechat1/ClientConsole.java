@@ -42,12 +42,12 @@ public class ClientConsole implements ChatIF
    */
   
   // E7 a)
-  // add loginId into constructor 
-  public ClientConsole(String loginId, String host, int port) 
+  // add loginID into constructor 
+  public ClientConsole(String loginID, String host, int port) 
   {
     try 
     {
-      client= new ChatClient(loginId, host, port, this);
+      client= new ChatClient(loginID, host, port, this);
     } 
     catch(IOException exception) 
     {
@@ -106,19 +106,19 @@ public class ClientConsole implements ChatIF
    */
   public static void main(String[] args) 
   {
-    String loginId = "";
-    String host = "";
+    String loginID;
+    String host;
     int port = 0;  //The port number
 
     
-    // Try-catch for loginId  
+    // Try-catch for loginID  
     try
     {
-      loginId = args[0];
+      loginID = args[0];
     }
 
     catch(ArrayIndexOutOfBoundsException e) {
-      System.out.println("Error: Invalid loginId! Terminating client.");
+      System.out.println("ERROR - No login ID specified.  Connection aborted.");
       System.exit(1);
     }
 
@@ -150,7 +150,7 @@ public class ClientConsole implements ChatIF
       System.exit(1);
     }
 
-    ClientConsole chat= new ClientConsole(loginId, host, port);
+    ClientConsole chat= new ClientConsole(loginID, host, port);
     chat.accept();  //Wait for console data
   }
 }
