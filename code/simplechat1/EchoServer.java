@@ -108,7 +108,7 @@ public class EchoServer extends AbstractServer
   // Add #quit, #stop, #close, #setport<port>, #gethost, #getport
 
   public void handleMessageFromServerUI(String message) {
-    try {
+    /*try {
       this.listen();
       System.out.println(message);
     }
@@ -116,7 +116,7 @@ public class EchoServer extends AbstractServer
     catch(IOException e) {
       System.out.println("Could not send message to server.  Terminating server.");
       System.exit(1);
-    }
+    } */
     
     // Add #quit, #stop, #close, #setport<port>, #start, #getport
 
@@ -135,11 +135,10 @@ public class EchoServer extends AbstractServer
           case "#quit":
             try {
               this.close();
+              System.out.println("Server has quit");
             }
-            catch(Exception ex) {
-              System.out.println("Quitting");
-              System.exit(0);
-              break;
+            catch(IOException ex) {
+              System.out.println("Error while quitting the server.");
             }
             break;
           
@@ -153,14 +152,15 @@ public class EchoServer extends AbstractServer
           
           // #close case
           case "#close":
+            // stop listening before closing
+            this.stopListening();
             // use close() method from AbstractServer
             try {
               this.close();
+              System.out.println("The server has closed.");
             }
-            catch(Exception ex) {
-              System.out.println("Closing");
-              System.exit(0);
-              break;
+            catch(IOException ex) {
+              System.out.println("Error while closing the server.");
             }
             break;
 
@@ -170,7 +170,8 @@ public class EchoServer extends AbstractServer
             // use isListening from AbstractServer
             if(this.isListening() == false) {
               // if not, then use the port argument as setport
-              this.setPort(Integer.parseInt(messageStringSplit[1]));
+              super.setPort(Integer.parseInt(messageStringSplit[1]));
+              System.out.println("New port: " + Integer.parseInt(messageStringSplit[1]));
             }
             else {
               // unable to set port while connected
@@ -185,21 +186,20 @@ public class EchoServer extends AbstractServer
             if(this.isListening() == false) {
               try {
                 this.listen();
+                System.out.println("The server is listening.");
               }
-              catch(Exception ex) {
-                System.out.println("Error occured while starting");
-                break;
+              catch(IOException ex) {
+                System.out.println("Error occured while starting.");
               }
-            break;
             }
 
             else {
-              System.out.println("The server has already started");
+              System.out.println("The server has already started.");
             }
             break;
 
           // #getport case
-          case"#getport":
+          case "#getport":
             // use getPort() method from AbstractServer 
             System.out.println("Port: " + this.getPort());
             break;
@@ -240,12 +240,20 @@ public class EchoServer extends AbstractServer
   // prints out a nice messafef when a client disconnects/connects
   // method from AbstractServer
   public void clientConnected(ConnectionToClient client) {
-    System.out.println("Client is connected!");
+    // E7 c)
+    // login command recognized by server when connected
+    if (client.getInfo("loginID") != null) {
+      System.out.println(client.getInfo("loginID" + " is connected!"));
+    }
+    else {
+      System.out.println("A client is connected!");
+    }
   }
 
 
   public void clientDisconnected(ConnectionToClient client) {
-    System.out.println("Client has disconnected!");
+    System.out.println(client.getInfo("loginID") + " has disconnected!");
+    this.sendToAllClients(client.getInfo("loginID") + " has disconnected!");
   }
 
 
@@ -275,11 +283,11 @@ public class EchoServer extends AbstractServer
       port = DEFAULT_PORT; //Set port to 5555
     }
 	
-    EchoServer sv = new EchoServer(port);
+    ServerConsole sv = new ServerConsole(port);
     
     try 
     {
-      sv.listen(); //Start listening for connections
+      sv.accept(); //Start listening for connections
     } 
     catch (Exception ex) 
     {
