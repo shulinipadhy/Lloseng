@@ -1,0 +1,396 @@
+Name: Shulini Padhy
+Student Number: 300067447
+Email: spadh052@uottawa.ca
+
+*************************** Testcase 2001 ***************************
+*********** EchoServer ***********
+
+Siddhis-Macbook-Air:simplechat1 smitamahapatra$ java EchoServer
+Server listening for connections on port 5555
+^CSiddhis-Macbook-Air:simplechat1 smitamahapatra$ 
+
+
+
+
+*************************** Testcase 2002 ***************************
+*********** ClientConsole ***********
+
+Siddhis-Macbook-Air:simplechat1 smitamahapatra$ java ClientConsole
+ERROR - No login ID specified.  Connection aborted.
+ 
+
+
+
+*************************** Testcase 2003 ***************************
+*********** ClientConsole ***********
+
+Siddhis-Macbook-Air:simplechat1 smitamahapatra$ java ClientConsole shulinipadhy
+Error: Can't setup connection! Terminating client.
+
+
+
+
+*************************** Testcase 2004 ***************************
+*********** EchoServer ***********
+
+Siddhis-Macbook-Air:simplechat1 smitamahapatra$ java EchoServer
+Server listening for connections on port 5555
+shulinipadhy is connected!
+#login: shulinipadhy has logged on.
+
+*********** ClientConsole ***********
+
+Siddhis-Macbook-Air:simplechat1 smitamahapatra$ java ClientConsole shulinipadhy
+
+
+
+
+*************************** Testcase 2005 ***************************
+*********** EchoServer ***********
+
+Siddhis-Macbook-Air:simplechat1 smitamahapatra$ java EchoServer
+Server listening for connections on port 5555
+#login: shulinipadhy has logged on.
+A client is connected!
+Message received: Hello ! from shulinipadhy
+
+*********** ClientConsole ***********
+
+Siddhis-Macbook-Air:simplechat1 smitamahapatra$ java ClientConsole shulinipadhy 
+Hello !
+> shulinipadhy: Hello !
+
+
+
+
+*************************** Testcase 2006 ***************************
+*********** EchoServer ***********
+
+^CSiddhis-Macbook-Air:simplechat1 smitamahapatra$ java EchoServer
+Server listening for connections on port 5555
+#login: shulinipadhy has logged on.
+A client is connected!
+#login: student1 has logged on.
+A client is connected!
+Message received: Hello ! from shulinipadhy
+Message received: What's up ?? from student1
+SERVER MSG> 
+
+*********** ClientConsole 1 ***********
+
+Siddhis-Macbook-Air:simplechat1 smitamahapatra$ java ClientConsole shulinipadhy
+Hello !
+> shulinipadhy: Hello ! 
+> student1: What's up ??
+> SERVER MSG> 
+
+*********** ClientConsole 2 ***********
+
+Siddhis-Macbook-Air:simplechat1 smitamahapatra$ java ClientConsole student1
+> shulinipadhy: Hello !
+What's up ??  
+> student1: What's up ??
+> SERVER MSG> 
+
+
+
+
+*************************** Testcase 2007 ***************************
+*********** EchoServer ***********
+
+Siddhis-Macbook-Air:simplechat1 smitamahapatra$ java EchoServer
+Server listening for connections on port 5555
+#quit
+Server has stopped listening for connections.
+Server has quit.
+SERVER MSG> #quit
+
+
+
+
+*************************** Testcase 2008 ***************************
+*********** EchoServer ***********
+
+^CSiddhis-Macbook-Air:simplechat1 smitamahapatra$ java EchoServer
+Server listening for connections on port 5555
+#login: shulinipadhy has logged on.
+A client is connected!
+#stop
+SERVER MSG> #stop
+Server has stopped listening for connections!
+Message received: Hello ! from shulinipadhy
+#start
+The server is listening.
+SERVER MSG> #start
+Server listening for connections on port 5555
+#login: student1 has logged on.
+A client is connected!
+#quit
+Server has stopped listening for connections.
+shulinipadhy has disconnected!
+student1 has disconnected!
+Server has quit.
+SERVER MSG> #quit
+
+*********** ClientConsole 1 ***********
+
+Siddhis-Macbook-Air:simplechat1 smitamahapatra$ java ClientConsole shulinipadhy
+Hello !
+> shulinipadhy: Hello !
+> The connection of the server is closed!
+
+*********** ClientConsole 2 ***********
+
+Siddhis-Macbook-Air:simplechat1 smitamahapatra$ java ClientConsole student1
+> The connection of the server is closed!
+
+
+
+
+*************************** Testcase 2009A ***************************
+*********** EchoServer ***********
+
+^CSiddhis-Macbook-Air:simplechat1 smitamahapatra$ java EchoServer
+Server listening for connections on port 5555
+#login: shulinipadhy has logged on.
+A client is connected!
+#stop
+SERVER MSG> #stop
+Server has stopped listening for connections!
+#close
+SERVER MSG> #close
+Server has stopped listening for connections.
+shulinipadhy has disconnected!
+The server has closed.
+
+*********** ClientConsole ***********
+
+Siddhis-Macbook-Air:simplechat1 smitamahapatra$ java ClientConsole shulinipadhy
+> The connection of the server is closed!
+
+
+
+
+*************************** Testcase 2009B ***************************
+*********** EchoServer ***********
+
+Siddhis-Macbook-Air:simplechat1 smitamahapatra$ java EchoServer
+Server listening for connections on port 5555
+#login: shulinipadhy has logged on.
+A client is connected!
+#close
+SERVER MSG> #close
+Server has stopped listening for connections.
+shulinipadhy has disconnected!
+The server has closed.
+#start
+SERVER MSG> #start
+The server is listening.
+Server listening for connections on port 5555
+#login: shulinipadhy has logged on.
+A client is connected!
+
+*********** ClientConsole ***********
+
+Siddhis-Macbook-Air:simplechat1 smitamahapatra$ java ClientConsole shulinipadhy
+> The connection of the server is closed!
+#login
+The connection is open!
+
+
+
+
+*************************** Testcase 2010 ***************************
+*********** ClientConsole ***********
+
+Siddhis-Macbook-Air:simplechat1 smitamahapatra$ java ClientConsole shulinipadhy
+#quit
+The server is quitting!
+> The connection of the server is closed!
+
+
+
+
+*************************** Testcase 2011 ***************************
+*********** EchoServer ***********
+
+^CSiddhis-Macbook-Air:simplechat1 smitamahapatra$ java EchoServer
+Server listening for connections on port 5555
+#login: shulinipadhy has logged on.
+A client is connected!
+
+*********** ClientConsole ***********
+
+Siddhis-Macbook-Air:simplechat1 smitamahapatra$ java ClientConsole shulinipadhy
+#logoff
+Connection is closing!
+> The connection of the server is closed!
+#quit
+The server is quitting!
+> The connection of the server is closed!
+
+
+
+
+*************************** Testcase 2012 ***************************
+*********** ClientConsole ***********
+
+Siddhis-Macbook-Air:simplechat1 smitamahapatra$ java ClientConsole shulinipadhy
+
+#gethost
+Host: shulinipadhy
+#getport
+Port: 5555
+#logoff
+Connection is closing!
+> The connection of the server is closed!
+#sethost localhost
+New host: localhost
+#setport 1234
+New port: 1234
+#quit
+The server is quitting!
+> The connection of the server is closed!
+
+
+
+
+*************************** Testcase 2013 ***************************
+*********** ServerConsole ***********
+
+Siddhis-Macbook-Air:simplechat1 smitamahapatra$ java ServerConsole 1234
+Server listening for connections on port 1234
+#quit
+Server has stopped listening for connections.
+Server has quit.
+SERVER MSG> #quit
+
+
+
+
+*************************** Testcase 2014 ***************************
+*********** ServerConsole ***********
+
+Siddhis-Macbook-Air:simplechat1 smitamahapatra$ java ServerConsole 1234
+Server listening for connections on port 1234
+#login: shulinipadhy has logged on.
+A client is connected!
+
+*********** ClientConsole ***********
+
+Siddhis-Macbook-Air:simplechat1 smitamahapatra$ java ClientConsole shulinipadhy localhost 1234
+ 
+
+
+
+*************************** Testcase 2015 ***************************
+*********** EchoServer ***********
+
+Siddhis-Macbook-Air:simplechat1 smitamahapatra$ java EchoServer
+Server listening for connections on port 5555
+#login: shulinipadhy has logged on.
+A client is connected!
+#login: student2 has logged on.
+A client is connected!
+#close
+SERVER MSG> #close
+Server has stopped listening for connections.
+shulinipadhy has disconnected!
+student2 has disconnected!
+The server has closed.
+#setport 1234
+New port: 1234
+#start
+The server is listening.
+Server listening for connections on port 1234
+#login: shulinipadhy has logged on.
+A client is connected!
+#login: student2 has logged on.
+A client is connected!
+#quit
+Server has stopped listening for connections.
+shulinipadhy has disconnected!
+student2 has disconnected!
+Server has quit.
+SERVER MSG> #quit
+
+*********** ClientConsole 1 ***********
+
+Siddhis-Macbook-Air:simplechat1 smitamahapatra$ java ClientConsole shulinipadhy
+> shulinipadhy has disconnected!
+> Connection interrupted, did not terminate properly.
+> The connection of the server is closed!
+#setport 1234
+#login
+A connection is open! 
+
+*********** ClientConsole 2 ***********
+
+Siddhis-Macbook-Air:simplechat1 smitamahapatra$ java ClientConsole student2
+> student2 has disconnected!
+> Connection interrupted, did not terminate properly.
+> The connection of the server is closed!
+#setport 1234
+#login
+A connection is open! 
+
+
+
+
+Note: I completed the following testcase (2016 and 2017) using 3 different terminal windows.
+
+*************************** Testcase 2016 ***************************
+*********** EchoServer ***********
+
+Siddhis-Macbook-Air:simplechat1 smitamahapatra$ java EchoServer
+Server listening for connections on port 5555
+
+*********** ServerConsole ***********
+
+Siddhis-Macbook-Air:simplechat1 smitamahapatra$ java ServerConsole 1234
+Server listening for connections on port 1234
+#login: shulinipadhy has logged on. 
+A client is connected!
+
+*********** ClientConsole ***********
+
+Siddhis-Macbook-Air:simplechat1 smitamahapatra$ java ClientConsole shulinipadhy localhost 1234
+
+
+
+
+*************************** Testcase 2017 ***************************
+*********** EchoServer ***********
+
+Siddhis-Macbook-Air:simplechat1 smitamahapatra$ java EchoServer
+Server listening for connections on port 5555
+#login: shulinipadhy has logged on.
+A client is connected!
+#login: student1 has logged on.
+A client is connected!
+#login: student2 has logged on.
+A client is connected!
+Client exception occured: shulinipadhy has disconnected!
+Client exception occured: student1 has disconnected!
+
+*********** ClientConsole 1 ***********
+
+Siddhis-Macbook-Air:simplechat1 smitamahapatra$ java ClientConsole shulinipadhy
+#quit
+The server is quitting!
+> The connection of the server is closed!
+
+*********** ClientConsole 2 ***********
+
+Siddhis-Macbook-Air:simplechat1 smitamahapatra$ java ClientConsole student1
+#logoff
+Connection is closing!
+> The connection of the server is closed!
+
+*********** ClientConsole 3 ***********
+
+Siddhis-Macbook-Air:simplechat1 smitamahapatra$ java ClientConsole student2
+
+
+Note: Sorry, I was not able to complete testcase 2018 and 2019! I do not have access to other platforms (95/98, NT, UNIX).
+

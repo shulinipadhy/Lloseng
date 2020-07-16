@@ -32,7 +32,6 @@ public class ClientConsole implements ChatIF
    */
   ChatClient client;
 
-  
   //Constructors ****************************************************
 
   /**
@@ -41,11 +40,14 @@ public class ClientConsole implements ChatIF
    * @param host The host to connect to.
    * @param port The port to connect on.
    */
-  public ClientConsole(String host, int port) 
+  
+  // E7 a)
+  // add loginID into constructor 
+  public ClientConsole(String loginID, String host, int port) 
   {
     try 
     {
-      client= new ChatClient(host, port, this);
+      client= new ChatClient(loginID, host, port, this);
     } 
     catch(IOException exception) 
     {
@@ -104,18 +106,51 @@ public class ClientConsole implements ChatIF
    */
   public static void main(String[] args) 
   {
+    String loginID = "";
     String host = "";
     int port = 0;  //The port number
 
+    
+    // Try-catch for loginID  
     try
     {
-      host = args[0];
+      loginID = args[0];
     }
-    catch(ArrayIndexOutOfBoundsException e)
-    {
+
+    catch(ArrayIndexOutOfBoundsException e) {
+      System.out.println("ERROR - No login ID specified.  Connection aborted.");
+      System.exit(1);
+    }
+
+    // Try-catch for host 
+    try {
+      host = args[1];
+    }
+
+    catch(ArrayIndexOutOfBoundsException e) {
       host = "localhost";
     }
-    ClientConsole chat= new ClientConsole(host, DEFAULT_PORT);
+
+    // Try-catch for port 
+    try{
+      // E5 b) 
+      // add port number from command line
+      // which is the 2nd argument 
+      port = Integer.parseInt(args[2]); 
+    }
+
+    catch(ArrayIndexOutOfBoundsException e)
+    {
+      // add port number 
+      port = DEFAULT_PORT;
+    }
+
+    catch(NumberFormatException e) {
+      System.out.println("Error: NumberFormatException! Terminating client.");
+      System.exit(1);
+    }
+
+    ClientConsole chat= new ClientConsole(loginID, host, port);
     chat.accept();  //Wait for console data
   }
 }
