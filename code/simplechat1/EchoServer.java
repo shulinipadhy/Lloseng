@@ -54,11 +54,14 @@ public class EchoServer extends AbstractServer
       String msgStr = msg.toString();
       // split message to choose every character
       char[] messageCharSplit = msgStr.toCharArray();
+      
       // check if it starts with #
       if(messageCharSplit[0] == '#') {
         // split message to choose every word
-        String[] messageStringSplit = msgStr.split(" ");
+        String[] messageStringSplit = msgStr.split("\\s+");
+        // check if each character matches the login command 
         if(messageStringSplit[0].equals("#login") && messageStringSplit.length>1) {
+          
           if(client.getInfo("loginID") == null) {
                 // use method setInfo; takes 2 arguments 
                 // the new set ID, and the message
@@ -126,7 +129,7 @@ public class EchoServer extends AbstractServer
     String[] messageStringSplit = message.split(" ");
     // each command should start with symbol #
     // so we check if it's a # command or not 
-      if(messageCharSplit[0] == ('#')) {
+      if(messageCharSplit[0] == '#') {
         // use switch-case statement
         switch(messageStringSplit[0]) {
           
@@ -135,7 +138,7 @@ public class EchoServer extends AbstractServer
           case "#quit":
             try {
               this.close();
-              System.out.println("Server has quit");
+              System.out.println("Server has quit.");
             }
             catch(IOException ex) {
               System.out.println("Error while quitting the server.");

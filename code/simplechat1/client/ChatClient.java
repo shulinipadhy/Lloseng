@@ -92,13 +92,14 @@ public class ChatClient extends AbstractClient
     // #gethost, #getport
 
     
-    // split the message to choose every word
-    String[] messageStringSplit = message.split(" ");
     // split the message to choose every character
     char[] messageCharSplit = message.toCharArray();
     // each command should start with symbol #
     // so we check if it's a # command or not 
-    if(messageCharSplit[0] == ('#')) {
+    if(messageCharSplit[0] == '#') {
+      // split the message to choose every word
+      String[] messageStringSplit = message.split("\\s+");
+
       // use switch-case statement
       switch(messageStringSplit[0]) {
         
