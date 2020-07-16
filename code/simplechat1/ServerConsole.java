@@ -42,7 +42,8 @@ public class ServerConsole implements ChatIF {
 
       		while (true) {
       			message = fromConsole.readLine();
-       			server.handleMessageFromServerUI(message);
+       			server.handleMessageFromServer(message);
+            this.display(message);
        		}
     	} 
     		
@@ -63,7 +64,7 @@ public class ServerConsole implements ChatIF {
     try {
       // no need to take any arguments like ClientConsole
       // since port is the only argument 
-      port = DEFAULT_PORT;
+      port = Integer.parseInt(args[0]);
     }
     
     catch(ArrayIndexOutOfBoundsException e) {
@@ -71,7 +72,7 @@ public class ServerConsole implements ChatIF {
     	port = DEFAULT_PORT;
     }
     
-    ServerConsole chat= new ServerConsole(DEFAULT_PORT);
+    ServerConsole chat= new ServerConsole(port);
     chat.accept();  //Wait for console data
   }
 }
